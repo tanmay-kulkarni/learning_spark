@@ -19,7 +19,7 @@ users = [
         datetime.datetime(2023, 3, 10, 11, 16, 56),
     ),
 ]
-Ï
+
 schema = """
     id INT,
     first_name STRING,
