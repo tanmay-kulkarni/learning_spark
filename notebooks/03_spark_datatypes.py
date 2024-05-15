@@ -1,4 +1,9 @@
 # Databricks notebook source
+# MAGIC %md
+# MAGIC ### Specify types with schema as a string
+
+# COMMAND ----------
+
 import datetime
 
 users = [
@@ -36,3 +41,46 @@ df.show()
 # COMMAND ----------
 
 df.printSchema()
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC ### Specify types using Spark types
+
+# COMMAND ----------
+
+from pyspark.sql.types import (
+    StructType,
+    StructField,
+    IntegerType,
+    StringType,
+    BooleanType,
+    DateType,
+    TimestampType,
+)
+
+fields = StructType(
+    [
+        StructField("id", IntegerType()),
+        StructField("first_name", StringType()),
+        StructField("last_name", StringType()),
+        StructField("is_customer", BooleanType()),
+        StructField("date_of_joining", DateType()),
+        StructField("last_updated", TimestampType()),
+    ]
+)
+
+
+df = spark.createDataFrame(users, fields)
+
+df.show()
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC ### Convert a spark dataframe to a pandas dataframe
+
+# COMMAND ----------
+
+pandas_df = df.toPandas()
+pandas_df.head()
